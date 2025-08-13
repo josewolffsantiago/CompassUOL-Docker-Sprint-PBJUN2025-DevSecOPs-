@@ -55,44 +55,55 @@ Abaixo está uma figura que irá representar o desafio apresentado aqui.
 
 Tudo na AWS começa com uma VPC bem configurada. Para este projeto, iremos ter uma VPC mais "Robusta", contendo:
 
-```mermaid
 graph TD
     classDef vpc fill:#f9f9f9,stroke:#333,stroke-width:2px;
     classDef public fill:#e1f5fe,stroke:#0288d1;
     classDef private fill:#e8f5e9,stroke:#388e3c;
-    classDef component fill:#fff,stroke:#666;
+    classDef component fill:#fff,stroke:#000,color:#000;  /* Texto preto */
 
     VPC:::vpc
 
-    subgraph " "
-        direction TB
-        IGW(("Internet Gateway")):::component
-        NAT(("NAT Gateway")):::component
-    end
+    %% Gateways
+    IGW(("Internet Gateway")):::component
+    NAT(("NAT Gateway")):::component
 
+    %% Conexões entre gateways
+    NAT --> IGW
+
+    %% Zona A
     subgraph "Zona de Disponibilidade A"
         PublicA[Subnet Pública]:::public
             BastionA[Bastion Host]:::component
-        PrivateA[Subnet Privada]:::private
-            WordPressA[WordPress]:::component
+        PrivateA1[Subnet Privada 1]:::private
+            WP1[EC2 WordPress]:::component
+        PrivateA2[Subnet Privada 2]:::private
+            RDS1[Amazon RDS]:::component
     end
 
+    %% Zona B
     subgraph "Zona de Disponibilidade B"
         PublicB[Subnet Pública]:::public
-        PrivateB[Subnet Privada]:::private
-            WordPressB[WordPress]:::component
+        PrivateB1[Subnet Privada 3]:::private
+            WP2[EC2 WordPress]:::component
+        PrivateB2[Subnet Privada 4]:::private
+            RDS2[Amazon RDS]:::component
     end
 
+    %% Conexões
     PublicA --> IGW
     PublicB --> IGW
-    PrivateA --> NAT
-    PrivateB --> NAT
+    
+    PrivateA1 --> NAT
+    PrivateA2 --> NAT
+    PrivateB1 --> NAT
+    PrivateB2 --> NAT
 
     VPC --> PublicA
     VPC --> PublicB
-    VPC --> PrivateA
-    VPC --> PrivateB
-```
+    VPC --> PrivateA1
+    VPC --> PrivateA2
+    VPC --> PrivateB1
+    VPC --> PrivateB2
 
 
 
