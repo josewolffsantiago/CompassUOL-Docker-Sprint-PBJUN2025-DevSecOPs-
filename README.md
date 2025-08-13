@@ -55,58 +55,45 @@ Abaixo está uma figura que irá representar o desafio apresentado aqui.
 
 Tudo na AWS começa com uma VPC bem configurada. Para este projeto, iremos ter uma VPC mais "Robusta", contendo:
 
-```mermaid
-graph TD
-    classDef vpc fill:#f9f9f9,stroke:#333,stroke-width:2px;
-    classDef public fill:#e1f5fe,stroke:#0288d1;
-    classDef private fill:#e8f5e9,stroke:#388e3c;
-    classDef component fill:#fff,stroke:#000,color:#000;  
+#### w. 2 sub-redes públicas
 
-    VPC:::vpc
+#### x. 4 sub-redes privadas
+   
+#### y. Uma Internet Gateway conectada às sub-redes públicas.
+        
+#### z. Um Gateway NAT conectada em todas às sub-redes privadas.
 
-    %% Gateways
-    IGW(("Internet Gateway")):::component
-    NAT(("NAT Gateway")):::component
+### 2.1. Na aba escrito Search no canto superior esquerto digite "VPC" 
 
-    %% Conexões entre gateways
-    NAT --> IGW
+![VPC Aba Search](/imgs/AWS-VPC-Aba-search.png)
 
-    %% Zona A
-    subgraph "Zona de Disponibilidade A"
-        PublicA[Subnet Pública]:::public
-            BastionA[Bastion Host]:::component
-        PrivateA1[Subnet Privada 1]:::private
-            WP1[EC2 WordPress]:::component
-        PrivateA2[Subnet Privada 2]:::private
-            RDS1[Amazon RDS]:::component
-    end
+### 2.2. Clica em "Your VPCs"
 
-    %% Zona B
-    subgraph "Zona de Disponibilidade B"
-        PublicB[Subnet Pública]:::public
-        PrivateB1[Subnet Privada 3]:::private
-            WP2[EC2 WordPress]:::component
-        PrivateB2[Subnet Privada 4]:::private
-            RDS2[Amazon RDS]:::component
-    end
+### 2.3. Ao abrir a página, procure por "Criar VPC"    
 
-    %% Conexões
-    PublicA --> IGW
-    PublicB --> IGW
+### 2.4. A AWS dá duas opções de VPC: "Somente VPC" ou "VPC e muito mais". Iremos na segunda opção, como a imagem abaixo.
     
-    PrivateA1 --> NAT
-    PrivateA2 --> NAT
-    PrivateB1 --> NAT
-    PrivateB2 --> NAT
+![VPC Novo VPC](/imgs/AWS-EC2-VPC-CREATE-NEW.png)
 
-    VPC --> PublicA
-    VPC --> PublicB
-    VPC --> PrivateA1
-    VPC --> PrivateA2
-    VPC --> PrivateB1
-    VPC --> PrivateB2
-```
+#### 2.4.1 Em Bloco CIDR coloque o IP na qual as instâncias irão ser endereçadas. 
 
+#### 2.4.2 Selecionar a quantidade de 2 em "Número de zonas de disponibilidade (AZs)"
+
+![VPC Novo VPC2](/imgs/AWS-VPC-SUBREDE.png) 
+
+#### 2.4.3 Selecionar a quantidade de 2 sub-redes Públicas e 4 sub-redes Privadas:
+
+#### 2.4.4 Selecionar a criação do Gateway NAT
+
+- Cuidado para não incindir cobranças na criação desde Gateway.
+
+![VPC Novo VPC3](/imgs/AWS-VPC-NUM-SUBREDE.png)
+
+### 2.5. Após todos estes passos, a sua pré-visualização deverá ficar próximo a este:
+
+![VPC Pre Visualizacao](/imgs/AWS-VPC-DIAGRAMA-FINAL.png)
+
+## 3. 
 
 
 
