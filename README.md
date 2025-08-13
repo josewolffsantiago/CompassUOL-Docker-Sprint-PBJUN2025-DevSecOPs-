@@ -55,6 +55,7 @@ Abaixo está uma figura que irá representar o desafio apresentado aqui.
 
 Tudo na AWS começa com uma VPC bem configurada. Para este projeto, iremos ter uma VPC mais "Robusta", contendo:
 
+```mermaid
 graph TD
     classDef vpc fill:#f9f9f9,stroke:#333,stroke-width:2px;
     classDef public fill:#e1f5fe,stroke:#0288d1;
@@ -104,6 +105,7 @@ graph TD
     VPC --> PrivateA2
     VPC --> PrivateB1
     VPC --> PrivateB2
+```
 
 
 
