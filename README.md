@@ -60,7 +60,7 @@ graph TD
     classDef vpc fill:#f9f9f9,stroke:#333,stroke-width:2px;
     classDef public fill:#e1f5fe,stroke:#0288d1;
     classDef private fill:#e8f5e9,stroke:#388e3c;
-    classDef component fill:#fff,stroke:#000,color:#000;  /* Texto preto */
+    classDef component fill:#fff,stroke:#000,color:#000;  
 
     VPC:::vpc
 
