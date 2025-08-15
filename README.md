@@ -92,21 +92,21 @@ Tudo na AWS começa com uma VPC bem configurada. Para este projeto, iremos ter u
 
 ### 2.6. Grupo de Segurança:
 
-    As rotas da VPC são criadas automaticamente. O que devemos estar atentos são os Grupos de Segurança. Irei pincelar levemente sobre as portas e os caminhos de terão que ser abertos para que os dados consigam trafegar tranquilamente.
+As rotas da VPC são criadas automaticamente. O que devemos estar atentos são os Grupos de Segurança. Irei pincelar levemente sobre as portas e os caminhos de terão que ser abertos para que os dados consigam trafegar tranquilamente.
 
-    Para criar os Grupos de Segurança, faça a busca no campo Search da AWS por "Security Groups". Há um link de acesso direto pela EC2, caso já esteja nesta página.
+Para criar os Grupos de Segurança, faça a busca no campo Search da AWS por "Security Groups". Há um link de acesso direto pela EC2, caso já esteja nesta página.
 
 ![VPC EC2 SG](/imgs/AWS-Secutiry-Search.png)
 
-    Na página seguinte, clique em "Criar Grupo de Segurança" 
+Na página seguinte, clique em "Criar Grupo de Segurança" 
 
 ![VPC EC2 SG CREATE](/imgs/AWS-Security-Create.png)
 
-    Não existe uma ordem específica para criar os Grupos de Segurança. Pode ser criada uma liberando as portas e depois voltar ao primeiro Grupo para redirecionar corretamente.
+Não existe uma ordem específica para criar os Grupos de Segurança. Pode ser criada uma liberando as portas e depois voltar ao primeiro Grupo para redirecionar corretamente.
 
 #### 2.6.1. Grupo de Segurança RDS (Banco de Dados)
 
-    Grupo de segurança do RDS irá comunicar apenas com a EC2 e qualquer modificação ou consulta em nosso banco de dados deve ocorrer dentro destas mesmas instâncias, com o acesso pelo Bastion.
+Grupo de segurança do RDS irá comunicar apenas com a EC2 e qualquer modificação ou consulta em nosso banco de dados deve ocorrer dentro destas mesmas instâncias, com o acesso pelo Bastion.
 
 ```
   WordpressDBSecurityGroup:
@@ -122,7 +122,7 @@ Tudo na AWS começa com uma VPC bem configurada. Para este projeto, iremos ter u
 
 #### 2.6.2. Grupo de Segurança AWS EFS
 
-    Grupo de segurança da EFS. Objetivo também é só a comunicação com a EC2 que irão hospedar o WordPress
+Grupo de segurança da EFS. Objetivo também é só a comunicação com a EC2 que irão hospedar o WordPress
 
 ```
       MountTargetEFSSG:
@@ -138,7 +138,7 @@ Tudo na AWS começa com uma VPC bem configurada. Para este projeto, iremos ter u
 
 #### 2.6.3. Grupo de Segurança BastionEC2 
 
-    Bastion é uma instância especifica que está em comunicação segura com a internet e o objetivo é fazer a interligação com as máquinas que estão hospedando o WordPress e estão em subnet Privada, sem comunicação direta via SSH pela internet ou outras comunicações de controle conhecida. Como essas instâncias estão em subnets privadas, o Bastion serve como intermediário para comunicações de controle, garantindo que não haja exposição direta das EC2 críticas.
+Bastion é uma instância especifica que está em comunicação segura com a internet e o objetivo é fazer a interligação com as máquinas que estão hospedando o WordPress e estão em subnet Privada, sem comunicação direta via SSH pela internet ou outras comunicações de controle conhecida. Como essas instâncias estão em subnets privadas, o Bastion serve como intermediário para comunicações de controle, garantindo que não haja exposição direta das EC2 críticas.
 
 ```
       BastionSGroup:
@@ -161,8 +161,8 @@ Tudo na AWS começa com uma VPC bem configurada. Para este projeto, iremos ter u
 
 #### 2.6.1 Grupo de Segurança EC2
 
-    Este grupo de segurança ele vai ser especialmente para as EC2 que estarão hospedando o serviço Wordpress. As portas liberadas serão as portas para fazer a comunicação entre o EFS, Banco de Dados e a instância Bastion.
-    
+Este grupo de segurança ele vai ser especialmente para as EC2 que estarão hospedando o serviço Wordpress. As portas liberadas serão as portas para fazer a comunicação entre o EFS, Banco de Dados e a instância Bastion.
+
 ```
       WordpressEC2SGroup:
       SecurityGroupIngress:
