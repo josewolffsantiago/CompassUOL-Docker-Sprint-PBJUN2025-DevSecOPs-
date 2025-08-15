@@ -265,23 +265,59 @@ A Amazon EFS é o serviço mais simples que iremos utilizar nesta documentação
 
 ![EFS Search](/imgs/AWS-EFS-Seach.png)
 
-Após a criação do Sistema de Arquivo, clica sobre ele para abrir a aba "Redes". Clique em "Criar ponto de montagem" para fazermos o link à subnet privada única dos EFS em ambas as zonas (us-east2a e us-east2b para este tutorial) e também redirecionar ao Grupo de Segurança específico deste Sistema de Arquivo.
+### 4.1. Após a criação do Sistema de Arquivo, clica sobre ele para abrir a aba "Redes". Clique em "Criar ponto de montagem" para fazermos o link à subnet privada única dos EFS em ambas as zonas (us-east2a e us-east2b para este tutorial) e também redirecionar ao Grupo de Segurança específico deste Sistema de Arquivo.
 
 ![EFS Montagem](/imgs/AWS-EFS-Montagem.png)
 
-Selecionar ambas as Zonas que estamos trabalhando e em ambos selecionar o Grupo de Segurança do Elastic File System
+### 4.2. Selecionar ambas as Zonas que estamos trabalhando e em ambos selecionar o Grupo de Segurança do Elastic File System
 
 ![EFS Rede Zona](/imgs/AWS-EFS-Rede-Acesso.png)
 
 Pode Clicar em Salvar para ir para o próximo passo.
 
-Voltando para a página inicial do Elastic File System, procure o botão Anexar, igual a imagem abaixo
+## 4.3. Voltando para a página inicial do Elastic File System, procure o botão Anexar, igual a imagem abaixo
 
 ![EFS Anexar](/imgs/AWS-EFS-Anexar.png)
 
-Ao abrir a próxima janela, copia o endereço DNS de montagem do sistema para usarmos mais tarde no UserData d EC2 que iremos montar.
+## 4.4. Ao abrir a próxima janela, copia o endereço DNS do cliente de NFS para montagem do sistema. Vamos usar mais tarde no UserData d EC2 que iremos montar.
 
 ![EFS Mount](/imgs/AWS-EFS-Mount.png)
+
+## 5. IAM - O Básico para rodar a EC2
+
+Infelizmente o meu conhecimento é muito básico em relação ao IAM, mas irei dar uma dica para conseguirmos fazer algumas automações no nosso UserData. Vamos criar uma nova Função do IAM para que consigamos utilizar o Bucket S3 e fazer o sistema gerar algumas Variaveis sensíveis e que não será necessário expo-los no nosso código.
+
+![IAM Search](/imgs/AWS-IAM-Search.png)
+
+### 5.2. Vamos acessar a página do IAM na AWS. Nesta página, clique em "Funções" no lado esquerdo e na próxima página, clica em "Criar Perfil"
+
+![IAM Perfil](/imgs/AWS-IAM-Funcoes-Perfil.png)
+
+### 5.3. Selecionar "Serviço da AWS" e logo abaixo selecionar o padrão "EC2"
+
+![IAM EC2](/imgs/AWS-IAM-EC2.png)
+
+Clicar em próximo
+
+### 5.4. Seleciona estas 5 regras abaixo:
+
+'''
+#### 5.4.1. AmazonEC2ContainerServiceforEC2Role
+	
+#### 5.4.2. AmazonEFSCSIDriverPolicy
+	
+#### 5.4.3. AmazonElasticFileSystemFullAccess
+
+#### 5.4.4. AmazonS3FullAccess	
+
+#### 5.4.5. AWSQuickSightDescribeRDS
+'''
+
+
+
+## 6. EC2 - Modelo de Execução
+
+
 
 
 
