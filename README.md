@@ -106,7 +106,8 @@ Não existe uma ordem específica para criar os Grupos de Segurança. Pode ser c
 
 #### 2.6.1. Grupo de Segurança RDS (Banco de Dados)
 
-Grupo de segurança do RDS irá comunicar apenas com a EC2 e qualquer modificação ou consulta em nosso banco de dados deve ocorrer dentro destas mesmas instâncias, com o acesso pelo Bastion.
+Grupo de segurança do RDS irá comunicar apenas com a EC2 e qualquer modificação ou consulta em nosso banco de dados deve ocorrer dentro destas mesmas instâncias, 
+com o acesso pelo Bastion.
 
 ```
   WordpressDBSecurityGroup:
@@ -138,7 +139,9 @@ Grupo de segurança da EFS. Objetivo também é só a comunicação com a EC2 qu
 
 #### 2.6.3. Grupo de Segurança BastionEC2 
 
-Bastion é uma instância especifica que está em comunicação segura com a internet e o objetivo é fazer a interligação com as máquinas que estão hospedando o WordPress e estão em subnet Privada, sem comunicação direta via SSH pela internet ou outras comunicações de controle conhecida. Como essas instâncias estão em subnets privadas, o Bastion serve como intermediário para comunicações de controle, garantindo que não haja exposição direta das EC2 críticas.
+Bastion é uma instância especifica que está em comunicação segura com a internet e o objetivo é fazer a interligação com as máquinas que estão hospedando o 
+WordPress e estão em subnet Privada, sem comunicação direta via SSH pela internet ou outras comunicações de controle conhecida. Como essas instâncias estão em 
+subnets privadas, o Bastion serve como intermediário para comunicações de controle, garantindo que não haja exposição direta das EC2 críticas.
 
 ```
       BastionSGroup:
@@ -161,7 +164,10 @@ Bastion é uma instância especifica que está em comunicação segura com a int
 
 #### 2.6.1 Grupo de Segurança EC2
 
-Este grupo de segurança ele vai ser especialmente para as EC2 que estarão hospedando o serviço Wordpress. As portas liberadas serão as portas para fazer a comunicação entre o EFS, Banco de Dados e a instância Bastion.
+Este grupo de segurança ele vai ser especialmente para as EC2 que estarão hospedando o serviço Wordpress. As portas liberadas serão as portas para fazer a 
+comunicação entre o EFS, Banco de Dados e a instância Bastion.
+
+
 
 ```
       WordpressEC2SGroup:
