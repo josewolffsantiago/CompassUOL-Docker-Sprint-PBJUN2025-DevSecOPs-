@@ -369,7 +369,7 @@ O ideal é sempre começar com uma EC2, porém já temos o [UserData](/UserDataE
 
 ![EC2 Model VPC](/imgs/AWS-MODEL-EC2REDE.png)
 
-Nesta parte, se atente em usar as subnets privadas e o Grupo de Segurança [Grupo de Segurança EC2](#### 2.6.4. Grupo de Segurança EC2)
+Nesta parte, se atente em usar as subnets privadas e o Grupo de Segurança [Grupo de Segurança EC2]([#### 2.6.4. Grupo de Segurança EC2](https://github.com/josewolffsantiago/CompassUOL-Docker-Sprint-PBJUN2025-DevSecOPs-?tab=readme-ov-file#264-grupo-de-seguran%C3%A7a-ec2))
 
 
 
