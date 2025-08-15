@@ -37,6 +37,18 @@
 
 - **Conhecimento sobre Docker**
     - [Curso Docker para Iniciantes](https://kodekloud.com/courses/docker-for-the-absolute-beginner/) Não é um curso, mas é um ótimo treinamento se você tem pelo menos o básico de conteinerização. 
+
+### 0.1. Materiais para Download:
+
+[UserData](/UserDataEC2Model.sh) 
+
+[Código AWS ClowdFormation](/compassWordpressSprint-v2.yaml)
+
+[Docker Compose - Wordpress](/docker-compose.yml)
+
+[Arquivo com as váriaveis de ambiente do Docker](/env) Mudar para .env e deixar na mesma pasta do Docker Compose.
+
+
 ---
 
 ## 1. Introdução
@@ -279,13 +291,13 @@ Pode Clicar em Salvar para ir para o próximo passo.
 
 ![EFS Anexar](/imgs/AWS-EFS-Anexar.png)
 
-## 4.4. Ao abrir a próxima janela, copia o endereço DNS do cliente de NFS para montagem do sistema. Vamos usar mais tarde no UserData d EC2 que iremos montar.
+## 4.4. Ao abrir a próxima janela, copia o endereço DNS do cliente de NFS para montagem do sistema. Vamos usar mais tarde no [UserData](/UserDataEC2Model.sh)  d EC2 que iremos montar.
 
 ![EFS Mount](/imgs/AWS-EFS-Mount.png)
 
 ## 5. IAM - O Básico para rodar a EC2
 
-Infelizmente o meu conhecimento é muito básico em relação ao IAM, mas irei dar uma dica para conseguirmos fazer algumas automações no nosso UserData. Vamos criar uma nova Função do IAM para que consigamos utilizar o Bucket S3 e fazer o sistema gerar algumas Variaveis sensíveis e que não será necessário expo-los no nosso código.
+Infelizmente o meu conhecimento é muito básico em relação ao IAM, mas irei dar uma dica para conseguirmos fazer algumas automações no nosso [UserData](/UserDataEC2Model.sh) . Vamos criar uma nova Função do IAM para que consigamos utilizar o Bucket S3 e fazer o sistema gerar algumas Variaveis sensíveis e que não será necessário expo-los no nosso código.
 
 ![IAM Search](/imgs/AWS-IAM-Search.png)
 
@@ -301,7 +313,7 @@ Clicar em próximo
 
 ### 5.4. Seleciona estas 5 regras abaixo:
 
-'''
+
 
     AmazonEC2ContainerServiceforEC2Role
 	
@@ -313,14 +325,39 @@ Clicar em próximo
 
     AWSQuickSightDescribeRDS
 
-'''
+
 
 ### 5.5. Resumo
 
 ![IAM Resumo](/imgs/AWS-IAM-Resumo.png)
 
 
-## 6. EC2 - Modelo de Execução
+## 6. S3 Bucket
+
+Esta função do Amazon AWS é bem interessante. Temos uma forma de colocar os arquivos diretamente para a Instância de forma segura, rápida e direto na própria AWS, sem correr o risco de termos links quebrados, código de download que gera erros ou baixar algum arquivo errado.
+
+
+![S3 Search](/imgs/AWS-S3-Search.png)
+
+### 6.1. Clique em "Criar bucket"
+
+![S3 Bucket](/imgs/AWS-S3-Bucket.png)
+
+### 6.2. Coloque um nome para o seu S3 Bucket, selecione para bloquiear todo acesso público e lembre de ativar o "Versionamento de bucket"
+
+![S3 Versionamento](/imgs/AWS-S3-Nome-Propriedades.png)
+
+### 6.3. Nesta outra página podemos clicar em "Carregar" para enviar arquivos para o nosso Bucket e o mais importante é o *"COPIAR URL DO S3"*.
+
+ Será esta URL que iremos utilizar para enviar as nossas variaveis e o código do container da WORDPRESS.
+
+![S3 Carregar](/imgs/AWS-S3-Carregar.png)
+
+## 7. EC2 - Modelo de Execução
+
+O ideal é sempre começar com uma EC2, porém já temos o [UserData](/UserDataEC2Model.sh) pronto, na qual eu já fiz toda esta parte de testar e validar os passos. Por isto, tomo a liberdade de ir direto ao Modelo de Execução, na qual iremos colar o [UserData](/UserDataEC2Model.sh) e já dar início ao nosso Modelo e poder incrementar no AutoScalling da AWS
+
+
 
 
 

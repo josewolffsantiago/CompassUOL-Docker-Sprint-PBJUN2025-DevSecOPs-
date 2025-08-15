@@ -1,0 +1,4 @@
+MYSQL_DATABASE=wordpress
+MYSQL_USER=Adicionar seu User do RDS
+MYSQL_PASSWORD=Senha usada no RDS
+MYSQL_ROOT_PASSWORD=Senha usada no RDS
