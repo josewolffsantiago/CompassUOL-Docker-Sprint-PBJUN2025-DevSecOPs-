@@ -302,17 +302,20 @@ Clicar em próximo
 ### 5.4. Seleciona estas 5 regras abaixo:
 
 '''
-#### 5.4.1. AmazonEC2ContainerServiceforEC2Role
+AmazonEC2ContainerServiceforEC2Role
 	
-#### 5.4.2. AmazonEFSCSIDriverPolicy
+AmazonEFSCSIDriverPolicy
 	
-#### 5.4.3. AmazonElasticFileSystemFullAccess
+AmazonElasticFileSystemFullAccess
 
-#### 5.4.4. AmazonS3FullAccess	
+AmazonS3FullAccess	
 
-#### 5.4.5. AWSQuickSightDescribeRDS
+AWSQuickSightDescribeRDS
 '''
 
+### 5.5. Resumo
+
+![IAM Resumo](/imgs/AWS-IAM-Resumo.png)
 
 
 ## 6. EC2 - Modelo de Execução
@@ -323,20 +326,7 @@ Clicar em próximo
 
 
 
-## 5. 
 
-
-
-AmazonEC2ContainerServiceforEC2Role
-	
-AmazonEFSCSIDriverPolicy
-	
-AmazonElasticFileSystemFullAccess
-
-AmazonS3FullAccess
-	
-
-AWSQuickSightDescribeRDS
 
 
 ## 8. Referências
