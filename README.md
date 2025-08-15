@@ -56,11 +56,8 @@ Abaixo está uma figura que irá representar o desafio apresentado aqui.
 Tudo na AWS começa com uma VPC bem configurada. Para este projeto, iremos ter uma VPC mais "Robusta", contendo:
 
 #### w. 2 sub-redes públicas
-
-#### x. 4 sub-redes privadas
-   
-#### y. Uma Internet Gateway conectada às sub-redes públicas.
-        
+#### x. 4 sub-redes privadas   
+#### y. Uma Internet Gateway conectada às sub-redes públicas.        
 #### z. Um Gateway NAT conectada em todas às sub-redes privadas.
 
 ### 2.1. Na aba escrito Search no canto superior esquerto digite "VPC" 
@@ -75,15 +72,15 @@ Tudo na AWS começa com uma VPC bem configurada. Para este projeto, iremos ter u
     
 ![VPC Novo VPC](/imgs/AWS-EC2-VPC-CREATE-NEW.png)
 
-#### 2.4.1 Em Bloco CIDR coloque o IP na qual as instâncias irão ser endereçadas. 
+#### 2.4.1. Em Bloco CIDR coloque o IP na qual os componentes da AWS irão ser endereçadas. 
 
-#### 2.4.2 Selecionar a quantidade de 2 em "Número de zonas de disponibilidade (AZs)"
+#### 2.4.2. Selecionar a quantidade de 2 em "Número de zonas de disponibilidade (AZs)"
 
 ![VPC Novo VPC2](/imgs/AWS-VPC-SUBREDE.png) 
 
-#### 2.4.3 Selecionar a quantidade de 2 sub-redes Públicas e 4 sub-redes Privadas:
+#### 2.4.3. Selecionar a quantidade de 2 sub-redes Públicas e 4 sub-redes Privadas:
 
-#### 2.4.4 Selecionar a criação do Gateway NAT
+#### 2.4.4. Selecionar a criação do Gateway NAT
 
 - Cuidado para não incindir cobranças na criação desde Gateway.
 
@@ -93,8 +90,49 @@ Tudo na AWS começa com uma VPC bem configurada. Para este projeto, iremos ter u
 
 ![VPC Pre Visualizacao](/imgs/AWS-VPC-DIAGRAMA-FINAL.png)
 
-## 3. 
+## 3. Criando Banco de Dados na AWS
 
+O banco de dados é primordial para o funcionamento do WordPress. É no banco de dados onde ficarão armazenados os dados que serão gerados quando o cliente ou usuário for utilizando o site. Configure com atenção, pois alguns dados que serão inseridos aqui estarão nos nossos arquivos de configuração.
+
+### 3.1. Na aba Search na AWS, procure por RDS e clica na primeira opção
+
+![RDS Search](/imgs/AWS-RDS-SEARCH.png)
+
+### 3.2. Logo ao abrir a página, clica em "Criar um banco de dados" logo no meio.
+
+### 3.3. Na página de criação, clica na opção "Criação Padrão" e escolha o MYSQL como opção de mecanismo
+
+![RDS Mecanismo](/imgs/AWS-RDS-Escolha-Mecanismo.png)
+
+### 3.4. CUIDADO: Nesta parte, escolha o Nível gratuito (free tier)
+
+![RDS Mecanismo](/imgs/AWS-RDS-Modelo-Gratuito.png)
+
+### 3.5. Na tela configurações, crie o identificador do seu Banco de Dados, um username e adicione senha.
+
+![RDS Senha](/imgs/AWS-RDS-Config.png)
+
+>**Nota:** ANOTE estes dados, pois eles serão usados em outro momento para que o Wordpress funcione.
+
+
+
+
+
+
+
+
+
+
+AmazonEC2ContainerServiceforEC2Role
+	
+AmazonEFSCSIDriverPolicy
+	
+AmazonElasticFileSystemFullAccess
+
+AmazonS3FullAccess
+	
+
+AWSQuickSightDescribeRDS
 
 
 ## 8. Referências
@@ -108,5 +146,13 @@ https://hub.docker.com/_/mariadb
 https://hub.docker.com/_/mariadb
 
 https://rancher.com/docs/os/v1.x/en/installation/cloud/aws/
+
+https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-ec2-instance.html
+
+https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-autoscaling-launchconfiguration.html
+
+https://docs.aws.amazon.com/pt_br/AWSCloudFormation/latest/UserGuide/quickref-efs.html
+
+https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-autoscaling-launchconfiguration.html
 
 
