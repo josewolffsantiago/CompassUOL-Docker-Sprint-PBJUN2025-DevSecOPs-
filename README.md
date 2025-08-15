@@ -302,15 +302,17 @@ Clicar em próximo
 ### 5.4. Seleciona estas 5 regras abaixo:
 
 '''
-AmazonEC2ContainerServiceforEC2Role
-	
-AmazonEFSCSIDriverPolicy
-	
-AmazonElasticFileSystemFullAccess
 
-AmazonS3FullAccess	
+    AmazonEC2ContainerServiceforEC2Role
+	
+    AmazonEFSCSIDriverPolicy
+	
+    AmazonElasticFileSystemFullAccess
 
-AWSQuickSightDescribeRDS
+    AmazonS3FullAccess	
+
+    AWSQuickSightDescribeRDS
+
 '''
 
 ### 5.5. Resumo
