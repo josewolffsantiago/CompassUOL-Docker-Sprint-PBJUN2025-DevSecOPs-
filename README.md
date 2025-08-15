@@ -357,8 +357,19 @@ Esta função do Amazon AWS é bem interessante. Temos uma forma de colocar os a
 
 O ideal é sempre começar com uma EC2, porém já temos o [UserData](/UserDataEC2Model.sh) pronto, na qual eu já fiz toda esta parte de testar e validar os passos. Por isto, tomo a liberdade de ir direto ao Modelo de Execução, na qual iremos colar o [UserData](/UserDataEC2Model.sh) e já dar início ao nosso Modelo e poder incrementar no AutoScalling da AWS
 
+### 7.1. EC2 Modelo de Execução e depois em "Criar modelo de execução"
 
+![EC2 MODEL](/imgs/AWS-MODEL-EC2-INICIAL.png)
 
+### 7.2. Adicionar o nome da Template, TAGS (se houverem) e Descrição
+
+![EC2 Criar](/imgs/AWS-MODEL-EC2CRIAR.png)
+
+### 7.3. Nesta parte, seleciona o tipo de instância, a sua chave PEM (PRIMORDIAL) e as configurações de Rede
+
+![EC2 Model VPC](/imgs/AWS-MODEL-EC2REDE.png)
+
+Nesta parte, se atente em usar as subnets privadas e o Grupo de Segurança [Grupo de Segurança EC2](#### 2.6.4. Grupo de Segurança EC2)
 
 
 
