@@ -90,6 +90,119 @@ Tudo na AWS começa com uma VPC bem configurada. Para este projeto, iremos ter u
 
 ![VPC Pre Visualizacao](/imgs/AWS-VPC-DIAGRAMA-FINAL.png)
 
+### 2.6. Grupo de Segurança:
+
+    As rotas da VPC são criadas automaticamente. O que devemos estar atentos são os Grupos de Segurança. Irei pincelar levemente sobre as portas e os caminhos de terão que ser abertos para que os dados consigam trafegar tranquilamente.
+
+    Para criar os Grupos de Segurança, faça a busca no campo Search da AWS por "Security Groups". Há um link de acesso direto pela EC2, caso já esteja nesta página.
+
+![VPC EC2 SG](/imgs/AWS-Secutiry-Search.png)
+
+    Na página seguinte, clique em "Criar Grupo de Segurança" 
+
+![VPC EC2 SG CREATE](/imgs/AWS-Security-Create.png)
+
+    Não existe uma ordem específica para criar os Grupos de Segurança. Pode ser criada uma liberando as portas e depois voltar ao primeiro Grupo para redirecionar corretamente.
+
+#### 2.6.1. Grupo de Segurança RDS (Banco de Dados)
+
+    Grupo de segurança do RDS irá comunicar apenas com a EC2 e qualquer modificação ou consulta em nosso banco de dados deve ocorrer dentro destas mesmas instâncias, com o acesso pelo Bastion.
+
+```
+  WordpressDBSecurityGroup:
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          Port: 3306
+          Redireciona para o Grupo de Segurança da EC2
+      SecurityGroupEgress:
+        - IpProtocol: tcp
+          Port: 3306
+          Redireciona para o Grupo de Segurança da EC2
+```
+
+#### 2.6.2. Grupo de Segurança AWS EFS
+
+    Grupo de segurança da EFS. Objetivo também é só a comunicação com a EC2 que irão hospedar o WordPress
+
+```
+      MountTargetEFSSG:
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          Port: 2049
+          Redireciona para o Grupo de Segurança da EC2
+      SecurityGroupEgress:
+        - IpProtocol: tcp
+          Port: 2049
+          Redireciona para o Grupo de Segurança da EC2
+```
+
+#### 2.6.3. Grupo de Segurança BastionEC2 
+
+    Bastion é uma instância especifica que está em comunicação segura com a internet e o objetivo é fazer a interligação com as máquinas que estão hospedando o WordPress e estão em subnet Privada, sem comunicação direta via SSH pela internet ou outras comunicações de controle conhecida. Como essas instâncias estão em subnets privadas, o Bastion serve como intermediário para comunicações de controle, garantindo que não haja exposição direta das EC2 críticas.
+
+```
+      BastionSGroup:
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          Liberado TODO o tráfego
+      SecurityGroupEgress:
+        - IpProtocol: tcp
+          Port: 8080
+          Liberado TODO o tráfego
+        - IpProtocol: tcp
+          Port: 22
+          Liberado TODO o tráfego
+        - IpProtocol: '-1'
+          CidrIp: 0.0.0.0/0
+          Liberado TODO o tráfego da internet
+```
+
+#### 2.6.1 Grupo de Segurança EC2
+
+    Este grupo de segurança ele vai ser especialmente para as EC2 que estarão hospedando o serviço Wordpress. As portas liberadas serão as portas para fazer a comunicação entre o EFS, Banco de Dados e a instância Bastion.
+    
+```
+      WordpressEC2SGroup:
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          Port: 8080
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          Port: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          Port: 3306
+          Redirecionado para Security Group responsável pela RDS (Banco de Dados)
+        - IpProtocol: tcp
+          Port: 2049
+          Redirecionado para o Security Group responsável pela EFS
+        - IpProtocol: tcp
+          Port: 22
+          Redirecionado para o Security Group da Bastion EC2
+      SecurityGroupEgress:
+        - IpProtocol: tcp
+          Port: 3306
+          Redirecionado para Security Group responsável pela RDS (Banco de Dados)
+        - IpProtocol: tcp
+          Port: 8080
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          Port: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          Port: 22
+          Redirecionado para o Security Group da Bastion EC2
+        - IpProtocol: '-1'
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          Port: 2049
+          Redirecionado para o Security Group responsável pela EFS
+```
+
+Pode ver que este é o maior grupo de segurança que nós iremos criar, pois as instâncias EC2 que estarão com o WordPress precisam se comunicar com o RDS, EFS e a instância Bastion.
+
 ## 3. Criando Banco de Dados na AWS
 
 O banco de dados é primordial para o funcionamento do WordPress. É no banco de dados onde ficarão armazenados os dados que serão gerados quando o cliente ou usuário for utilizando o site. Configure com atenção, pois alguns dados que serão inseridos aqui estarão nos nossos arquivos de configuração.
@@ -114,11 +227,13 @@ O banco de dados é primordial para o funcionamento do WordPress. É no banco de
 
 >**Nota:** ANOTE estes dados, pois eles serão usados em outro momento para que o Wordpress funcione.
 
+### 3.6. Escolha a opção da instância db.t3.micro e o armazenamento o gp2, com 20Gb de espaço.
 
+![RDS Armazanamento](/imgs/AWS-RDS-Armazenamento.png)
 
+>**Nota:**Coloque um limite máximo de armazenamento. Como é apenas para teste, não será necessário escalonar acima de 50Gb.
 
-
-
+### 3.7. Em Conectividade, selecione a VPC já criada e coloque o Banco de Dados RDS em um grupo de segurança já selecionado.
 
 
 
