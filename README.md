@@ -147,9 +147,8 @@ subnets privadas, o Bastion serve como intermediário para comunicações de con
       BastionSGroup:
       SecurityGroupIngress:
         - IpProtocol: tcp
-          FromPort: 22
-          ToPort: 22
-          Liberado TODO o tráfego
+          Port: 22
+          Liberado TODO o tráfego SSH
       SecurityGroupEgress:
         - IpProtocol: tcp
           Port: 8080
@@ -162,11 +161,10 @@ subnets privadas, o Bastion serve como intermediário para comunicações de con
           Liberado TODO o tráfego da internet
 ```
 
-#### 2.6.1 Grupo de Segurança EC2
+#### 2.6.4. Grupo de Segurança EC2
 
 Este grupo de segurança ele vai ser especialmente para as EC2 que estarão hospedando o serviço Wordpress. As portas liberadas serão as portas para fazer a 
 comunicação entre o EFS, Banco de Dados e a instância Bastion.
-
 
 
 ```
@@ -239,8 +237,57 @@ O banco de dados é primordial para o funcionamento do WordPress. É no banco de
 
 >**Nota:**Coloque um limite máximo de armazenamento. Como é apenas para teste, não será necessário escalonar acima de 50Gb.
 
-### 3.7. Em Conectividade, selecione a VPC já criada e coloque o Banco de Dados RDS em um grupo de segurança já selecionado.
+### 3.7. Em Conectividade, selecione a VPC já criada e coloque o Banco de Dados RDS em um grupo de segurança já criado anteriormente.
 
+![RDS Conectividade](/imgs/AWS-RDS-Conectividade.png)
+
+Fique atento para selecionar uma SubNet Privada, a mesma VPC que nós criamos acima e também selecionar o Grupo de Segurança espeífico do Banco de Dados.
+
+### 3.8. Autenticação e Nome adicional do banco de dados
+
+Passo muito importante também para não errarmos no futuro, quando configurarmos o nosso BD diretamente no Wordpress
+
+![RDS Autenticação](/imgs/AWS-RDS-Autenticacao-Nome.png)
+
+>**Nota:**Isto quer dizer que a autenticação do Banco de Dados será diretamente pelo Username e pela Senha. O MySQL irá interligar ao RDS usando estas autenticações. Colocar o nome adicional como:
+
+'''
+wordpress
+'''
+
+### 3.9. Criar Banco de Dados
+
+Desta forma, podemos rolar até o final da página e clicar em "Criar Banco de Dados". O processo para a criaçao é bem lenta.
+
+## 4. EFS - Elastic File System
+
+A Amazon EFS é o serviço mais simples que iremos utilizar nesta documentação. Ao abrir a página, clique em "Criar Sistema de Arquivo" e logo após, selecione a VPC que criamo e clique novamente em "Criar Sistema de Arquivo".
+
+![EFS Search](/imgs/AWS-EFS-Seach.png)
+
+Após a criação do Sistema de Arquivo, clica sobre ele para abrir a aba "Redes". Clique em "Criar ponto de montagem" para fazermos o link à subnet privada única dos EFS em ambas as zonas (us-east2a e us-east2b para este tutorial) e também redirecionar ao Grupo de Segurança específico deste Sistema de Arquivo.
+
+![EFS Montagem](/imgs/AWS-EFS-Montagem.png)
+
+Selecionar ambas as Zonas que estamos trabalhando e em ambos selecionar o Grupo de Segurança do Elastic File System
+
+![EFS Rede Zona](/imgs/AWS-EFS-Rede-Acesso.png)
+
+Pode Clicar em Salvar para ir para o próximo passo.
+
+Voltando para a página inicial do Elastic File System, procure o botão Anexar, igual a imagem abaixo
+
+![EFS Anexar](/imgs/AWS-EFS-Anexar.png)
+
+Ao abrir a próxima janela, copia o endereço DNS de montagem do sistema para usarmos mais tarde no UserData d EC2 que iremos montar.
+
+![EFS Mount](/imgs/AWS-EFS-Mount.png)
+
+
+
+
+
+## 5. 
 
 
 
