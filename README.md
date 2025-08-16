@@ -420,6 +420,36 @@ Ainda na aba da EC2, lado esquerdo, última opção nós temos o Grupo Auto Scal
 
 ## 9. Cloudformation
 
+Neste documento temos disponibilizado um código CloudFormation, que foi um desafio proposto para implementar de forma mais rápida e concisa o sistema.
+
+### 9.1. Dentro da página CloudFormation, clique em "Criar Pilha"
+
+![AWS CloudFormation Search](/imgs/AWS-Clouformation-Search.png)
+
+### 9.2. Selecione o "Escolher modelo existente" e logo abaixo "Fazer upload de um arquivo modelo" para conseguir colocar o arquivo [YAML do código do CloudFormation](/compassWordpressSprint-v2.yaml)
+
+![AWS Cloudformation](/imgs/AWS-Cloudformation-Create%20STACK.png)
+
+### 9.3. Antes de clicar em próximo, clique no icone que irá ser habilidado após o arquivo carregar "Visualizar no Infrastructure Composer", visualize os componentes que serão criados e verifique se há algo de errado no código (Botão Validar.)
+
+![AWS Cloudformation Model](/imgs/AWS-Cloudformation-Model.png)
+
+### 9.4. Na próxima página vai ter vários espaços para colocar Parametros.
+
+Foi criado esta seção para as senhas e variaveis que são sensiveis, que não pode ser guardado diretamente no código e que está disponíbilizado para você fazer este modelo. Adicione o Nome da Pilha (Stack), o CostCenter, selecione a sua chave de acesso SSH e a senha do seu banco de dados
+
+>**Nota:** Se você participa de outra turma deste projeto, é só adicionar o número do CostCenter. Caso você esteja usando a AWS com sua conta pessoal, deixe este campo vazio
+
+![AWS Cloudformation Stack name](/imgs/AWS-Cloudformation-Parametro.png)
+
+### 9.5. Após adicionar os Parametros, na proxima página selecione a opção "Preservar recursos disponibilizados com êxito"
+
+Neste caso, há uma função IAM Role na linha 563 dentro do arquivo do CloudFormation que só irá funcionar na minha STACK. Se você estiver lendo isto e puder alterar pelo nome da função IAM criada por você não haverá este erro.
+
+![AWS CF Stack Error](/imgs/AWS-Cloudformation-Falha.png)
+
+### 9.6. Outra dica:
+Há um UserData dentro do código deste arquivo CloudFormation e há uma referencia ao meu Bucket S3, com meus arquivos do [docker-compose.yml](/docker-compose.yml) e do [.env](/env). Eles se encontram na linha 551 e 553, caso queira trocar pelo seu link destes mesmo arquivos no Bucket S3.
 
 
 
@@ -427,14 +457,11 @@ Ainda na aba da EC2, lado esquerdo, última opção nós temos o Grupo Auto Scal
 
 
 
-
-## 8. Referências
+## 10. Referências
 
 Abaixo irei colocar todos os sites na qual retirei recursos e aprendizados para fazer possível este projeto:
 
 [Easy Local WordPress](https://www.youtube.com/watch?v=gEceSAJI_3s)
-
-https://hub.docker.com/_/mariadb
 
 https://hub.docker.com/_/mariadb
 
@@ -446,6 +473,5 @@ https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resou
 
 https://docs.aws.amazon.com/pt_br/AWSCloudFormation/latest/UserGuide/quickref-efs.html
 
-https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-autoscaling-launchconfiguration.html
 
 
