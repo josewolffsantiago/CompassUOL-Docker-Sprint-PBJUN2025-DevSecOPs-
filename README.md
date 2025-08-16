@@ -237,6 +237,8 @@ comunicação entre o EFS, Banco de Dados e a instância Bastion.
 
 Pode ver que este é o maior grupo de segurança que nós iremos criar, pois as instâncias EC2 que estarão com o WordPress precisam se comunicar com o RDS, EFS e a instância Bastion.
 
+---
+
 ## 3. Criando Banco de Dados na AWS
 
 O banco de dados é primordial para o funcionamento do WordPress. É no banco de dados onde ficarão armazenados os dados que serão gerados quando o cliente ou usuário for utilizando o site. Configure com atenção, pois alguns dados que serão inseridos aqui estarão nos nossos arquivos de configuração.
@@ -289,6 +291,8 @@ wordpress
 
 Desta forma, podemos rolar até o final da página e clicar em "Criar Banco de Dados". O processo para a criaçao é bem lenta.
 
+---
+
 ## 4. EFS - Elastic File System
 
 A Amazon EFS é o serviço mais simples que iremos utilizar nesta documentação. Ao abrir a página, clique em "Criar Sistema de Arquivo" e logo após, selecione a VPC que criamo e clique novamente em "Criar Sistema de Arquivo".
@@ -312,6 +316,8 @@ Pode Clicar em Salvar para ir para o próximo passo.
 ## 4.4. Ao abrir a próxima janela, copia o endereço DNS do cliente de NFS para montagem do sistema. Vamos usar mais tarde no [UserData](/UserDataEC2Model.sh)  d EC2 que iremos montar.
 
 ![EFS Mount](/imgs/AWS-EFS-Mount.png)
+
+---
 
 ## 5. Identity and Access Management - IAM - O Básico para rodar a EC2
 
@@ -349,6 +355,7 @@ Clicar em próximo
 
 ![IAM Resumo](/imgs/AWS-IAM-Resumo.png)
 
+---
 
 ## 6. S3 Bucket
 
@@ -370,6 +377,8 @@ Esta função do Amazon AWS é bem interessante. Temos uma forma de colocar os a
  Será esta URL que iremos utilizar para enviar as nossas variaveis e o código do container da WORDPRESS.
 
 ![S3 Carregar](/imgs/AWS-S3-Carregar.png)
+
+---
 
 ## 7. EC2 - Modelo de Execução
 
@@ -400,6 +409,8 @@ Procure o nome da função que você criou neste quadro acima para ativar o func
 ![EC2 Model IAM](/imgs/AWS-MODEL-EC2-USERDATA.png)
 
 ### 7.6. Pode clicar em Criar Modelo de Execução
+
+---
 
 ## 8. Montar o grupo de Auto Scalling
 
