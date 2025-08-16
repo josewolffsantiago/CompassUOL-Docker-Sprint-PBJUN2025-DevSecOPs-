@@ -7,9 +7,27 @@
 ## Índice
 
 
+[Pré-requisitos](#0-pré-requisitos)
+
+[Introdução](#1-introdução)
+
+[Configurando VPC](#2-configurando-vpc)   
+
+[Criando Banco de Dados na AWS](#3-criando-banco-de-dados-na-aws)
+
+[EFS - Elastic File System](#4-efs---elastic-file-system)
+
+[Identity and Access Management - IAM](#5-identity-and-access-management---iam)
+
+[S3 Bucket](#6-s3-bucket)
+
+[EC2 - Modelo de Execução](#7-ec2---modelo-de-execução)
+
+[Montar o grupo de Auto Scalling](#8-montar-o-grupo-de-auto-scalling)
+
+[Referências](#9-referências)
 
 ---
-
 
 ## 0. Pré-requisitos
 
