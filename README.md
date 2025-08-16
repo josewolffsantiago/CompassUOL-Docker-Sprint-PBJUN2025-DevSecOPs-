@@ -247,7 +247,7 @@ O banco de dados é primordial para o funcionamento do WordPress. É no banco de
 
 ![RDS Armazanamento](/imgs/AWS-RDS-Armazenamento.png)
 
->**Nota:**Coloque um limite máximo de armazenamento. Como é apenas para teste, não será necessário escalonar acima de 50Gb.
+>**Nota:** Coloque um limite máximo de armazenamento. Como é apenas para teste, não será necessário escalonar acima de 50Gb.
 
 ### 3.7. Em Conectividade, selecione a VPC já criada e coloque o Banco de Dados RDS em um grupo de segurança já criado anteriormente.
 
@@ -261,7 +261,7 @@ Passo muito importante também para não errarmos no futuro, quando configurarmo
 
 ![RDS Autenticação](/imgs/AWS-RDS-Autenticacao-Nome.png)
 
->**Nota:**Isto quer dizer que a autenticação do Banco de Dados será diretamente pelo Username e pela Senha. O MySQL irá interligar ao RDS usando estas autenticações. Colocar o nome adicional como:
+>**Nota:** Isto quer dizer que a autenticação do Banco de Dados será diretamente pelo Username e pela Senha. O MySQL irá interligar ao RDS usando estas autenticações. Colocar o nome adicional como:
 
 '''
 wordpress
@@ -295,7 +295,7 @@ Pode Clicar em Salvar para ir para o próximo passo.
 
 ![EFS Mount](/imgs/AWS-EFS-Mount.png)
 
-## 5. IAM - O Básico para rodar a EC2
+## 5. Identity and Access Management - IAM - O Básico para rodar a EC2
 
 Infelizmente o meu conhecimento é muito básico em relação ao IAM, mas irei dar uma dica para conseguirmos fazer algumas automações no nosso [UserData](/UserDataEC2Model.sh) . Vamos criar uma nova Função do IAM para que consigamos utilizar o Bucket S3 e fazer o sistema gerar algumas Variaveis sensíveis e que não será necessário expo-los no nosso código.
 
@@ -369,12 +369,9 @@ O ideal é sempre começar com uma EC2, porém já temos o [UserData](/UserDataE
 
 ![EC2 Model VPC](/imgs/AWS-MODEL-EC2REDE.png)
 
-<<<<<<< HEAD
-Nesta parte, se atente em usar as subnets privadas e o Grupo de Segurança [Grupo de Segurança EC2]([#### 2.6.4. Grupo de Segurança EC2](https://github.com/josewolffsantiago/CompassUOL-Docker-Sprint-PBJUN2025-DevSecOPs-?tab=readme-ov-file#264-grupo-de-seguran%C3%A7a-ec2))
-=======
-Nesta parte, se atente em usar as subnets privadas e o Grupo de Segurança [Grupo de Segurança EC2](####-2.6.4.-Grupo-de-Segurança-EC2) 
->>>>>>> 01173b2 (Adicionado UserData e env)
+>**Nota:** Se atente em usar as subnets privadas e o Grupo de Segurança [Grupo de Segurança EC2]([#### 2.6.4. Grupo de Segurança EC2](https://github.com/josewolffsantiago/CompassUOL-Docker-Sprint-PBJUN2025-DevSecOPs-?tab=readme-ov-file#264-grupo-de-seguran%C3%A7a-ec2))
 
+### 7.4. Sabe a função de Identidade que Fizemos no passo [IAM - O Básico para rodar a EC2]([
 
 
 
