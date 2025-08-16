@@ -383,6 +383,10 @@ Procure o nome da função que você criou neste quadro acima para ativar o func
 
 ### 7.6. Pode clicar em Criar Modelo de Execução
 
+## 8. Montar o grupo de Auto Scalling
+
+### 8.1. 
+
 
 
 
