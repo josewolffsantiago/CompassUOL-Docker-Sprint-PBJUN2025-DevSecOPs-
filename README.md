@@ -357,6 +357,8 @@ Esta função do Amazon AWS é bem interessante. Temos uma forma de colocar os a
 
 O ideal é sempre começar com uma EC2, porém já temos o [UserData](/UserDataEC2Model.sh) pronto, na qual eu já fiz toda esta parte de testar e validar os passos. Por isto, tomo a liberdade de ir direto ao Modelo de Execução, na qual iremos colar o [UserData](/UserDataEC2Model.sh) e já dar início ao nosso Modelo e poder incrementar no AutoScalling da AWS
 
+>**Nota:**PERCEBA que este UserData ainda é o meu e você terá que estilizar ele, ou seja, trocar os links da S3 pelos seus links, por exemplo. Usando o meu UserData diretamente a sua Instancia EC2 naõ irá funcionar
+
 ### 7.1. EC2 Modelo de Execução e depois em "Criar modelo de execução"
 
 ![EC2 MODEL](/imgs/AWS-MODEL-EC2-INICIAL.png)
@@ -369,11 +371,27 @@ O ideal é sempre começar com uma EC2, porém já temos o [UserData](/UserDataE
 
 ![EC2 Model VPC](/imgs/AWS-MODEL-EC2REDE.png)
 
-<<<<<<< HEAD
-Nesta parte, se atente em usar as subnets privadas e o Grupo de Segurança [Grupo de Segurança EC2]([#### 2.6.4. Grupo de Segurança EC2](https://github.com/josewolffsantiago/CompassUOL-Docker-Sprint-PBJUN2025-DevSecOPs-?tab=readme-ov-file#264-grupo-de-seguran%C3%A7a-ec2))
-=======
-Nesta parte, se atente em usar as subnets privadas e o Grupo de Segurança [Grupo de Segurança EC2](####-2.6.4.-Grupo-de-Segurança-EC2) 
->>>>>>> 01173b2 (Adicionado UserData e env)
+Nesta parte, fique atento em usar as subnets privadas e o Grupo de Segurança [2.6.4. Grupo de Segurança EC2](https://github.com/josewolffsantiago/CompassUOL-Docker-Sprint-PBJUN2025-DevSecOPs-?tab=readme-ov-file#264-grupo-de-seguran%C3%A7a-ec2)
+
+### 7.4. Em "Detalhes Avançados", selecione a "IAM ROLE" que criamos posteriormente na seção [5. IAM - O Básico para rodar a EC2](https://github.com/josewolffsantiago/CompassUOL-Docker-Sprint-PBJUN2025-DevSecOPs-?tab=readme-ov-file#5-iam---o-b%C3%A1sico-para-rodar-a-ec2)
+
+![EC2 Model IAM](/imgs/AWS-MODEL-EC2-IAM.png)
+
+### 7.5. Descendo mais um pouco, podemos colocar o nosso [UserData](/UserDataEC2Model.sh) 
+
+![EC2 UserData](/imgs/AWS-MODEL-EC2-USERDATA.png) e clicar em "Criar Modelo de execução"
+
+## 8. AutoScallingGroup
+
+Ainda na aba da EC2, lado esquerdo, última opção nós temos o Grupo Auto Scalling, que, resumindo, consta na criação automática de Instâncias EC2 a partir do momento de Alta Escalabilidade. Ou seja, se houver muitas solicitações no seu site, este grupo pode incrementar mais máquinas para suprir as necessidades. O mesmo pode ocorrer ao contrário, quando ouver menos solicitações ao seu serviço, a própria AWS irá desligar algumas máquinas para desta forma economizar.
+
+![AS EC2](/imgs/AWS-AutoScalling-EC2.png)
+
+### 8.1. Selecionar as Subredes que as Instâncias EC2 que irão trabalhar, sendo a prioridade as Subrede Privadas e o Grupo de Segurança específico para EC2.
+
+![AS Fotto](/imgs/AWS-AutoScalling-Rede.png)
+
+## 9. Cloudformation
 
 
 
