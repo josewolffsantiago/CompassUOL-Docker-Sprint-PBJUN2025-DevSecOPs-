@@ -384,7 +384,7 @@ Esta função do Amazon AWS é bem interessante. Temos uma forma de colocar os a
 
 O ideal é sempre começar com uma EC2, porém já temos o [UserData](/UserDataEC2Model.sh) pronto, na qual eu já fiz toda esta parte de testar e validar os passos. Por isto, tomo a liberdade de ir direto ao Modelo de Execução, na qual iremos colar o [UserData](/UserDataEC2Model.sh) e já dar início ao nosso Modelo e poder incrementar no AutoScalling da AWS
 
->**Nota:**PERCEBA que este UserData ainda é o meu e você terá que estilizar ele, ou seja, trocar os links da S3 pelos seus links, por exemplo. Usando o meu UserData diretamente a sua Instancia EC2 naõ irá funcionar
+>**Nota:** PERCEBA que este UserData ainda é o meu e você terá que estilizar ele, ou seja, trocar os links da S3 pelos seus links, por exemplo. Usando o meu UserData diretamente a sua Instancia EC2 naõ irá funcionar
 
 ### 7.1. EC2 Modelo de Execução e depois em "Criar modelo de execução"
 
@@ -408,6 +408,8 @@ O ideal é sempre começar com uma EC2, porém já temos o [UserData](/UserDataE
 
 ![EC2 UserData](/imgs/AWS-MODEL-EC2-USERDATA.png) e clicar em "Criar Modelo de execução"
 
+---
+
 ## 8. AutoScallingGroup
 
 Ainda na aba da EC2, lado esquerdo, última opção nós temos o Grupo Auto Scalling, que, resumindo, consta na criação automática de Instâncias EC2 a partir do momento de Alta Escalabilidade. Ou seja, se houver muitas solicitações no seu site, este grupo pode incrementar mais máquinas para suprir as necessidades. O mesmo pode ocorrer ao contrário, quando ouver menos solicitações ao seu serviço, a própria AWS irá desligar algumas máquinas para desta forma economizar.
@@ -417,6 +419,8 @@ Ainda na aba da EC2, lado esquerdo, última opção nós temos o Grupo Auto Scal
 ### 8.1. Selecionar as Subredes que as Instâncias EC2 que irão trabalhar, sendo a prioridade as Subrede Privadas e o Grupo de Segurança específico para EC2.
 
 ![AS Fotto](/imgs/AWS-AutoScalling-Rede.png)
+
+---
 
 ## 9. Cloudformation
 
@@ -451,13 +455,126 @@ Neste caso, há uma função IAM Role na linha 563 dentro do arquivo do CloudFor
 ### 9.6. Outra dica:
 Há um UserData dentro do código deste arquivo CloudFormation e há uma referencia ao meu Bucket S3, com meus arquivos do [docker-compose.yml](/docker-compose.yml) e do [.env](/env). Eles se encontram na linha 551 e 553, caso queira trocar pelo seu link destes mesmo arquivos no Bucket S3.
 
+---
+
+## 10. LOAD-BALANCER
+
+Após carregado todo a Stack na nuvem e iniciado os recursos na CLOUD da AWS, vamos de imediato iniciar o nosso LOAD BALANCER. Ele que irá fazer a conexão das nossas máquinas que estão protegidas em SUBNET Privada no mundo globalizado da internet. Este recurso é novo, por isto não está automatizado no CloudFormation, possivelmente ele estará incluso com os estudos do Terraform.
+
+![AWS LB](/imgs/AWS-LoadBalancer-Search.png)
+
+### 10.1. Clique em "Criar LOAD BALANCER" e na página seguinte, clique em "Application Load Balancer"
+
+Este é o tipo de Load Balancer que iremos utilizar no nosso Wordpress
+
+![AWS LB APP](/imgs/AWS-LoadBalancer-ApplicationLB.png)
+
+### 10.2. Na página que irá carregar, podemos selecionar a VPC que foi criada e selecionar as duas subrede PÚBLICAS, cada uma em uma zona.
+
+![AWS LB REDE](/imgs/AWS-LoadBalancer-AplicationLB2-Rede.png)
+
+### 10.3. Abaixo, vamos configurar o "Listener" do nosso LoadBalancer. Colocar a porta para 8080 e clique em "Criar grupo de destino"
+
+![AWS LB TARGET](/imgs/AWS-LoadBalancer-Listener3.png)
+
+### 10.4. Nesta próxima tela, selecione "Instância", coloque um nome no grupo de destino e na porta, deixe certo a porta 8080
+
+![AWS LB TARGET2](/imgs/AWS-LoadBalancer-Target1.png)
+
+### 10.5. Coloca em "Listener e roteamento" as opções abaixo, para verificação de integridade. Em código de sucesso, deixe o intervalo de 200 até 300.
+
+![AWS TARGETG](/imgs/AWS-LoadBalancer-Target2.png)
+
+### 10.6. Clicando em "Avançar", terá uma caixa para selecionar as instâncias que estão rodando. Confira novamente as portas 8080
+
+![AWS LB TARGET3](/imgs/AWS-LoadBalancer-Target3-Destinos.png)
+
+### 10.7. Voltando para a tela do Load Balancer, clica no REFRESH ao lado da caixa de seleção do Grupo de destino para aparecer o Grupo de Destino 
+
+Não dê refresh no seu navegador, entenda que é apenas o botão de atualizar da própria AWS para carregar o grupo de destino.
+
+![AWS LB VOLTA](/imgs/AWS-LoadBalancer-ListenerTG2-Selecionar.png)
+
+### 10.8. Pode clicar em "Criar Load Balancer" e ná pagina principal do Load Balancer, copia a DNS e coloque em outra aba do seu navegador com a porta :8080
+
+![AWS LB DNS](/imgs/AWS-LoadBalancer-CopiaDNS.png)
+
+Se você fez tudo conforme este tutorial e utilizou o CLOUDFORMATION ao invés do console, este erro vai ocorrer no seu nagegador.
+
+![AWS LB erro DB](/imgs/AWS-Wordpress-SemBD.png)
+
+O que ocorre no Cloudformation é que o Banco de Dados RDS demora muito para ser inicializado e as máquinas EC2 não conseguem encontrar ele por não ter sido construido. O que vamos fazer é derrubar as duas máquinas criadas e iniciar elas novamente.
+
+#### 10.8.1. Ir na aba "Intância" para ver as instâncias EC2 criadas. Selecionar ambas e clicar em "Interromper Instância" conforme a imagem
+
+![AWS EC2 delete](/imgs/AWS-EC2-Reiniciar.png)
+
+#### 10.8.2. Clica em "Encerrar" na próxima aba que for abrir
+
+![AWS EC2 interromper](/imgs/AWS-EC2-Encerrar2.png)
+
+#### 10.8.3. Espere alguns minutos e o AutoScalling irá iniciar outras duas máquinas
+
+![AWS EC2 iniciando](/imgs/AWS-EC2-Encerrar-iniciando.png)
+
+#### 10.8.4. Volte para a aba "Grupo de destino", que fica logo abaixo do "Load Balancer", clique no Target criado, depois em destino e em "Registrar Destinos"
+
+![AWS LB Target Volta](/imgs/AWS-LoadBalancer-TARGET-DESTINO-VOLTA.png)
+
+#### 10.8.5. Selecione novamente as duas Instâncias EC2 que foram iniciadas pelo AutoScalling
+
+![AWS LB Instancia](/imgs/AWS-LoadBalancer-TARGET-VOLTA2.png)
+
+#### 10.8.6. Coloque o DNS novamente no navegador e coloque a porta :8080 no final do link, irá carregar a página de instalação do WordPress.
+
+![AWS Wordpress funcionando](/imgs/AWS-WORDPRESS2.png)
+
+#### 10.9. Voltando ao Load Balancer, vamos fazer mais uma alteração para funcionar a tela de login
+
+A tela de login dá algum conflito que não entendo como ocorre, mas procurando por documentos, verifiquei que é algo relacionado aos cookies.
+
+#### 10.9.1. Volte para a aba "Grupo de destino"
+
+![AWS TARGETGROUP](/imgs/AWS-LoadBalancer-GrupoDestino1.png)
+
+#### 10.9.2. Clique no Target criado e vá em "Atributos e clique em "Editar"
+
+![AWS TARGETGROUP2](/imgs/AWS-LoadBalancer-Grupodestino2.png)
+
+#### 10.9.3. Nesta página, mude para 60s a opção "Duração de iniciação lenta" e logo abaixo, na "Configuração[...]" seleciona a caixa de seleção da "Ativar a Viscosidade" e altere a perdurilidade para "2 minutos". 
 
 
+![AWS TARGETGROUP3](/imgs/AWS-LoadBalancer-Grupodestino3.png)
 
+#### 10.9.4. Siga atentamente as opções descritas nesta imagem acima.
 
+### 10.10. Está é a imagem das duas instâncias que estão Saúdaveis e ambas fornecendo o site do Wordpress em pleno funcionamento
 
+![AWS health](/imgs/AWS-RESULTADO-LOADBALANCER.png)
 
-## 10. Referências
+---
+
+## 11. Configurando corretamente, o seu sistema irá entrar na tela de login após a instalação do WordPress
+
+Um teste muito legal é adicionar um arquivo dentro do "Media" no WORDPRESS para ver o Banco de Dados Funcionando
+
+### 11.1. Adicione um arquivo pequeno, de no máximo 2MB no Wordpress Media, nas opções de admin
+
+![Wordpress arquivo](/imgs/AWS-WORDPRESS-ARQUIVO2M.png)
+
+### 11.2. Resultado dele aparecendo no RDS da AWS
+
+![Wordpress RDS](/imgs/AWS-WORPRESS-RDS.png)
+
+### 11.3. O disco EFS conectado em ambas as máquinas e funcionando
+
+![AWS funcionando](/imgs/AWS-EFS-LEITURA.png)
+
+Note que ambas as máquinas estão conectadas e há relatos de leitura e gravação.
+
+---
+
+## 12. Referências
 
 Abaixo irei colocar todos os sites na qual retirei recursos e aprendizados para fazer possível este projeto:
 
@@ -472,6 +589,7 @@ https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resou
 https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-autoscaling-launchconfiguration.html
 
 https://docs.aws.amazon.com/pt_br/AWSCloudFormation/latest/UserGuide/quickref-efs.html
+
 
 
 
