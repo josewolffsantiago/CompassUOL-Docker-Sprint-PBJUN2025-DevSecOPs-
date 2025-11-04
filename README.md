@@ -1,8 +1,8 @@
 # Sprint 1 - Configurando VPC e Instância AWS  
 **Compass UOL**
 
-> **Nota:**
-> Esta documentação faz parte do programa da Compass UOL e não é considerada um tutorial. Siga cada etapa cuidadosamente e, em caso de dúvidas, consulte a documentação oficial da AWS. 
+>[!IMPORTANT] 
+>Esta documentação faz parte do programa da Compass UOL e não é considerada um tutorial. Siga cada etapa cuidadosamente e, em caso de dúvidas, consulte a documentação oficial da AWS. 
 
 ## Índice
 
@@ -55,7 +55,9 @@
 
 - **Conhecimento básico do console AWS**
     - [Crie uma conta gratuitamente](https://aws.amazon.com/pt/training/digital/?p=train&c=tc&z=1)
-    >**Nota:** Mesmo selecionando a conta gratuita, o sistema irá pedir um cartão de crédito para finalizar o cadastro. CUIDADO com os recursos que você irá explorar na AWS.
+
+    >[!IMPORTANT] 
+    >Mesmo selecionando a conta gratuita, o sistema irá pedir um cartão de crédito para finalizar o cadastro. CUIDADO com os recursos que você irá explorar na AWS.
 
     - [Faça o AWS Cloud Quest](cloudquest.skillbuilder.aws) Faça os cursos dentro da própria AWS para se ambientar com o console. Primordial para quem quer estudar e aprender mais sobre a AWS.
 
@@ -85,7 +87,9 @@ O ideal antes de fazer o docker funcionar diretamente na AWS é entender como o 
 
 Abaixo está uma figura que irá representar o desafio apresentado aqui. 
 
->**Nota:** Esta imagem foi retirada diretamente do documento do desafio e não possuo certeza se ela pode estar aqui, mas é primordial para o entendimento deste documento.
+![Diagrama Wordpress](/imgs/ChatGPT%20Diagrama%20Wordpress.png)
+
+
 
 ---
 
@@ -269,13 +273,15 @@ O banco de dados é primordial para o funcionamento do WordPress. É no banco de
 
 ![RDS Senha](/imgs/AWS-RDS-Config.png)
 
->**Nota:** ANOTE estes dados, pois eles serão usados em outro momento para que o Wordpress funcione.
+>[!IMPORTANT] 
+>ANOTE estes dados, pois eles serão usados em outro momento para que o Wordpress funcione.
 
 ### 3.6. Escolha a opção da instância db.t3.micro e o armazenamento o gp2, com 20Gb de espaço.
 
 ![RDS Armazanamento](/imgs/AWS-RDS-Armazenamento.png)
 
->**Nota:** Coloque um limite máximo de armazenamento. Como é apenas para teste, não será necessário escalonar acima de 50Gb.
+>[!NOTE] 
+>Coloque um limite máximo de armazenamento. Como é apenas para teste, não será necessário escalonar acima de 50Gb.
 
 ### 3.7. Em Conectividade, selecione a VPC já criada e coloque o Banco de Dados RDS em um grupo de segurança já criado anteriormente.
 
@@ -289,11 +295,12 @@ Passo muito importante também para não errarmos no futuro, quando configurarmo
 
 ![RDS Autenticação](/imgs/AWS-RDS-Autenticacao-Nome.png)
 
->**Nota:** Isto quer dizer que a autenticação do Banco de Dados será diretamente pelo Username e pela Senha. O MySQL irá interligar ao RDS usando estas autenticações. Colocar o nome adicional como:
+>[!IMPORTANT] 
+>Isto quer dizer que a autenticação do Banco de Dados será diretamente pelo Username e pela Senha. O MySQL irá interligar ao RDS usando estas autenticações. Colocar o nome adicional como:
 
-'''
-wordpress
-'''
+
+            wordpress
+
 
 ### 3.9. Criar Banco de Dados
 
@@ -392,7 +399,8 @@ Esta função do Amazon AWS é bem interessante. Temos uma forma de colocar os a
 
 O ideal é sempre começar com uma EC2, porém já temos o [UserData](/UserDataEC2Model.sh) pronto, na qual eu já fiz toda esta parte de testar e validar os passos. Por isto, tomo a liberdade de ir direto ao Modelo de Execução, na qual iremos colar o [UserData](/UserDataEC2Model.sh) e já dar início ao nosso Modelo e poder incrementar no AutoScalling da AWS
 
->**Nota:** PERCEBA que este UserData ainda é o meu e você terá que estilizar ele, ou seja, trocar os links da S3 pelos seus links, por exemplo. Usando o meu UserData diretamente a sua Instancia EC2 naõ irá funcionar
+>[!NOTE] 
+>PERCEBA que este UserData ainda é o meu e você terá que estilizar ele, ou seja, trocar os links da S3 pelos seus links, por exemplo. Usando o meu UserData diretamente a sua Instancia EC2 não irá funcionar
 
 ### 7.1. EC2 Modelo de Execução e depois em "Criar modelo de execução"
 
@@ -406,7 +414,9 @@ O ideal é sempre começar com uma EC2, porém já temos o [UserData](/UserDataE
 
 ![EC2 Model VPC](/imgs/AWS-MODEL-EC2REDE.png)
 
->**Nota:** Se atente em usar as subnets privadas e o Grupo de Segurança [2.6.4. Grupo de Segurança EC2](https://github.com/josewolffsantiago/CompassUOL-Docker-Sprint-PBJUN2025-DevSecOPs-?tab=readme-ov-file#264-grupo-de-seguran%C3%A7a-ec2)
+
+>[!IMPORTANT] 
+>Se atente em usar as subnets privadas e o Grupo de Segurança [2.6.4. Grupo de Segurança EC2](https://github.com/josewolffsantiago/CompassUOL-Docker-Sprint-PBJUN2025-DevSecOPs-?tab=readme-ov-file#264-grupo-de-seguran%C3%A7a-ec2)
 
 ### 7.4. Em "Detalhes Avançados", selecione a "IAM ROLE" que criamos posteriormente na seção [5. IAM - O Básico para rodar a EC2](#5-identity-and-access-management---iam---o-b%C3%A1sico-para-rodar-a-ec2)
 
@@ -452,7 +462,8 @@ Neste documento temos disponibilizado um código CloudFormation, que foi um desa
 
 Foi criado esta seção para as senhas e variaveis que são sensiveis, que não pode ser guardado diretamente no código e que está disponíbilizado para você fazer este modelo. Adicione o Nome da Pilha (Stack), o CostCenter, selecione a sua chave de acesso SSH e a senha do seu banco de dados
 
->**Nota:** Se você participa de outra turma deste projeto, é só adicionar o número do CostCenter. Caso você esteja usando a AWS com sua conta pessoal, deixe este campo vazio
+>[!NOTE] 
+>Se você participa de outra turma deste projeto, é só adicionar o número do CostCenter. Caso você esteja usando a AWS com sua conta pessoal, deixe este campo vazio
 
 ![AWS Cloudformation Stack name](/imgs/AWS-Cloudformation-Parametro.png)
 
