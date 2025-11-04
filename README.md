@@ -17,15 +17,21 @@
 
 [EFS - Elastic File System](#4-efs---elastic-file-system)
 
-[Identity and Access Management - IAM](#5-identity-and-access-management---iam)
+[Identity and Access Management - IAM](#5-identity-and-access-management---iam---o-b%C3%A1sico-para-rodar-a-ec2)
 
 [S3 Bucket](#6-s3-bucket)
 
 [EC2 - Modelo de Execução](#7-ec2---modelo-de-execução)
 
-[Montar o grupo de Auto Scalling](#8-montar-o-grupo-de-auto-scalling)
+[Montar o grupo de Auto Scalling](#8-autoscallinggroup)
 
-[Referências](#9-referências)
+[CloudFormation](#9-cloudformation)
+
+[Como Configurar o Load Balancer](#10-load-balancer)
+
+[Configurando o Wordpress no Load Balancer AWS](#11-configurando-corretamente-o-seu-sistema-ir%C3%A1-entrar-na-tela-de-login-ap%C3%B3s-a-instala%C3%A7%C3%A3o-do-wordpress)
+
+[Referências](#12-refer%C3%AAncias)
 
 ---
 
@@ -60,7 +66,9 @@
 
 [UserData](/UserDataEC2Model.sh) 
 
-[Código AWS ClowdFormation](/compassWordpressSprint-v2.yaml)
+[Código AWS CloudFormation](/compassWordpressSprint-v3.yaml)
+
+[Código AWS CloudFormation PESSOAL](/compassWordpressSprint-v4-pessoal.yaml) - Este é exclusivo para quem não quer que puxa uma TAG. Para uso em uma conta AWS Free Tier.
 
 [Docker Compose - Wordpress](/docker-compose.yml)
 
@@ -400,13 +408,15 @@ O ideal é sempre começar com uma EC2, porém já temos o [UserData](/UserDataE
 
 >**Nota:** Se atente em usar as subnets privadas e o Grupo de Segurança [2.6.4. Grupo de Segurança EC2](https://github.com/josewolffsantiago/CompassUOL-Docker-Sprint-PBJUN2025-DevSecOPs-?tab=readme-ov-file#264-grupo-de-seguran%C3%A7a-ec2)
 
-### 7.4. Em "Detalhes Avançados", selecione a "IAM ROLE" que criamos posteriormente na seção [5. IAM - O Básico para rodar a EC2](https://github.com/josewolffsantiago/CompassUOL-Docker-Sprint-PBJUN2025-DevSecOPs-?tab=readme-ov-file#5-iam---o-b%C3%A1sico-para-rodar-a-ec2)
+### 7.4. Em "Detalhes Avançados", selecione a "IAM ROLE" que criamos posteriormente na seção [5. IAM - O Básico para rodar a EC2](#5-identity-and-access-management---iam---o-b%C3%A1sico-para-rodar-a-ec2)
 
 ![EC2 Model IAM](/imgs/AWS-MODEL-EC2-IAM.png)
 
 ### 7.5. Descendo mais um pouco, podemos colocar o nosso [UserData](/UserDataEC2Model.sh) 
 
-![EC2 UserData](/imgs/AWS-MODEL-EC2-USERDATA.png) e clicar em "Criar Modelo de execução"
+![EC2 UserData](/imgs/AWS-MODEL-EC2-USERDATA.png)
+
+ e clicar em "Criar Modelo de execução"
 
 ---
 
@@ -430,7 +440,7 @@ Neste documento temos disponibilizado um código CloudFormation, que foi um desa
 
 ![AWS CloudFormation Search](/imgs/AWS-Clouformation-Search.png)
 
-### 9.2. Selecione o "Escolher modelo existente" e logo abaixo "Fazer upload de um arquivo modelo" para conseguir colocar o arquivo [YAML do código do CloudFormation](/compassWordpressSprint-v2.yaml)
+### 9.2. Selecione o "Escolher modelo existente" e logo abaixo "Fazer upload de um arquivo modelo" para conseguir colocar o arquivo [YAML do código do CloudFormation](/compassWordpressSprint-v3.yaml)
 
 ![AWS Cloudformation](/imgs/AWS-Cloudformation-Create%20STACK.png)
 
